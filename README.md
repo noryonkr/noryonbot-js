@@ -11,6 +11,7 @@
 "token": "토큰",
 "dev":["아이디"]",
 "prefix": "n!",
+}
 ```
 config.inc.json으로 된것을 config.json으로 바꿔주시면됩니다
 -
