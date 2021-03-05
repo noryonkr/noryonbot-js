@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/noryonkr/noryonbot-js#readme",
   "dependencies": {
-    "discord.js": "^12.5.1"
+    "discord.js": "^12.5.1",
+    "dokdo": "^0.2.0"
   }
 }
