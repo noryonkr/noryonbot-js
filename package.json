@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "@types/node": "^14.14.41",
+    "dayjs": "^1.10.4",
+    "discord.js": "^12.5.3",
+    "glob": "^7.1.6",
+    "path": "^0.12.7",
+    "shoukaku": "^1.6.4",
+    "winston": "^3.3.3"
+  },
+  "name": "noryonbot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo yes"
+  },
+  "author": "noryon",
+  "license": "ISC",
+  "description": ""
+}
