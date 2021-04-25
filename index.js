@@ -5,7 +5,7 @@ const utils = require('./src/utils')
 
 const client = new Client()
 client.on('ready', () => console.log('ready'))
-// client.login(require('./settings.js').token)
+ //client.login(require('./settings.js').token)
 
 class BaseClient extends Client {
   constructor (options) {

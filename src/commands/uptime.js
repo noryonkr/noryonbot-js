@@ -3,7 +3,7 @@ class Command {
         this.client = client
         this.name = 'uptime'
         this.aliases = ["업타임"]
-        this.category = 'TEST'
+        this.category = 'geranal'
         this.permissions = ['Everyone']
         this.usage = ''
         this.description = ''
@@ -20,3 +20,5 @@ class Command {
         message.channel.send(`봇 속도는.. ${this.client.ws.ping}`)
     }
 }
+
+module.exports = Command
