@@ -10,12 +10,19 @@
   },
   "name": "noryonbot",
   "version": "1.0.0",
-  "main": "index.js",
-  "devDependencies": {},
+  "main": "init.js",
   "scripts": {
     "test": "echo yes"
   },
   "author": "noryon",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noryonkr/noryonbot-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/noryonkr/noryonbot-js/issues"
+  },
+  "homepage": "https://github.com/noryonkr/noryonbot-js#readme",
   "description": ""
 }
