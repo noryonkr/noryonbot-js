@@ -3,14 +3,10 @@ const path = require('path')
 const { promisify } = require('util')
 const utils = require('./src/utils')
 
-const client = new Client()
-client.on('ready', () => console.log('ready'))
- //client.login(require('./settings.js').token)
-
 class BaseClient extends Client {
   constructor (options) {
     super()
-    this.options = options
+    this.config = options
     this.utils = utils
     this.commands = new Collection()
     this.aliases = new Collection()
@@ -32,7 +28,7 @@ class BaseClient extends Client {
       this.logger.debug(`[Init] Initializing...`)
       await this.registerEvents()
       await this.loadCommands()
-      await this.login(this.options.token)
+      await this.login(this.config.token)
       this.initialized = true
   }
 
