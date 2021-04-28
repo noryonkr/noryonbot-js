@@ -2,7 +2,7 @@ class Command {
     constructor (client) {
         this.client = client
         this.name = 'ping'
-        this.aliases = ["업타임"]
+        this.aliases = ["핑"]
         this.category = 'geranal'
         this.permissions = ['Everyone']
         this.usage = ''
@@ -17,7 +17,7 @@ class Command {
     }
 
     async run ({ message }) {
-        message.channel.send(`봇 속도는.. ${this.client.ws.ping}`)
+        message.channel.send(`봇 속도는.. ${this.client.ws.ping}ms`)
     }
 }
 

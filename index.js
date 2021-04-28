@@ -12,6 +12,7 @@ class BaseClient extends Client {
     this.aliases = new Collection()
     this.events = new Collection()
     this.logger = new utils.Logger(this)
+    this.audio = new utils.Audio(this, this.config.audio.nodes, this.config.audio.shoukakuOptions)
     this.events = new Collection()
     this.commands = new Collection()
     this.aliases = new Collection()
