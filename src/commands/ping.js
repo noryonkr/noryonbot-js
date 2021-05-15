@@ -1,3 +1,5 @@
+const { MessageEmbed } = require("discord.js")
+
 class Command {
     constructor (client) {
         this.client = client
@@ -17,7 +19,10 @@ class Command {
     }
 
     async run ({ message }) {
-        message.channel.send(`봇 속도는.. ${this.client.ws.ping}ms`)
+        const embed = new MessageEmbed()
+        .setTitle("핑")
+        .setDescription(`${this.client.ping.ws}ms`)
+        message.channel.send(embed)
     }
 }
 
