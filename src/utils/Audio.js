@@ -46,7 +46,8 @@ class Audio extends Shoukaku.Shoukaku {
       this.queue.playNext(guildId)
     })
     player.on('trackException', (data) => {
-       this.client.logger.debug(`[Player:Event:TrackException]`)
+      this.client.logger.debug(`[Player:Event:TrackException] [${player.guildID}, ${player.voiceChannelID}] is Track(${data.track}) Exception.`)
+      
     })
   }
 }

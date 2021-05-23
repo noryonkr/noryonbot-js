@@ -1,9 +1,9 @@
 class Command {
     constructor (client) {
         this.client = client
-        this.name = 'test'
-        this.aliases = []
-        this.category = 'TEST'
+        this.name = 'help'
+        this.aliases = ['도움','도움말']
+        this.category = '기본'
         this.permissions = ['Everyone']
         this.usage = ''
         this.description = ''
