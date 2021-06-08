@@ -7,6 +7,7 @@ class BaseClient extends Client {
   constructor (options) {
     super()
     this.config = options
+    this.config.prefix
     this.utils = utils
     this.commands = new Collection()
     this.aliases = new Collection()
@@ -24,12 +25,14 @@ class BaseClient extends Client {
     this.commands_loaded = false
     this.events_loaded = false
   }
+ 
 
   async init () {
       this.logger.debug(`[Init] Initializing...`)
       await this.registerEvents()
       await this.loadCommands()
       await this.login(this.config.token)
+      
       this.initialized = true
   }
 
@@ -76,8 +79,10 @@ class BaseClient extends Client {
     this.logger.info(`${reloadOrLoadPrefix} Successfully Command ${reloadOrLoadSubfix}ed!`)
     this.commands_loaded = true
     return this.commands
-  }
+    
 
+  }
+  
   getInfo () {
     const mem = process.memoryUsage()
     return {
@@ -87,6 +92,7 @@ class BaseClient extends Client {
       memoryUsage: `ArrayBuffers: ${this.utils.niceBytes(mem.arrayBuffers)}, External: ${this.utils.niceBytes(mem.external)}, Heaptotal: ${this.utils.niceBytes(mem.heapTotal)}, Heapused: ${this.utils.niceBytes(mem.heapUsed)}, Rss: ${this.utils.niceBytes(mem.rss)}`
     }
   }
+  
 }
 
 module.exports = BaseClient

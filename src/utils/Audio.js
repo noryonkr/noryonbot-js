@@ -8,7 +8,6 @@ class Audio extends Shoukaku.Shoukaku {
       super(...args)
       this.client = args.shift()
       this.utils = new AudioUtils(this.client)
-      // this.players = new Collection()
       this.queue = new Queue(this)
       this.queue.on('queueEvent', data => this.queue.handleEvent(data))
       this.on('ready', (name, resumed) => this.client.logger.info(`[Audio:Lavalink] Lavalink Node: ${name} is now connected. This connection is ${resumed ? 'resumed' : 'a new connection'}`))
@@ -47,7 +46,7 @@ class Audio extends Shoukaku.Shoukaku {
     })
     player.on('trackException', (data) => {
       this.client.logger.debug(`[Player:Event:TrackException] [${player.guildID}, ${player.voiceChannelID}] is Track(${data.track}) Exception.`)
-      
+      this.queue.play(guildId)
     })
   }
 }
