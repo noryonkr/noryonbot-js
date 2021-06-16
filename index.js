@@ -5,8 +5,8 @@ const { promisify } = require('util')
 const utils = require('./src/utils')
 
 const { Player } = require('discord-player');
-const hook = new WebhookClient("853564813362724894","MAODVMJTYXLbIJNv0LS-zHAO-VcmvLJQTlg9P0lMVLEYzahpo3PKKCZXtL9v7aaJKRzW")
-const hook2 = new WebhookClient("853223309822525450","1VY2PXedKueApLLAtW5V9Nf8ZSu7Q0gvs9RRetH36KUxjbIsX8gMOHXnbeV0kAsnYyIo")
+const hook = new WebhookClient("id","token") //음악 불러오는 웹후크 알림
+const hook2 = new WebhookClient("id","token") //봇 기본 알림
 class BaseClient extends Client {
   constructor (options) {
     super()
