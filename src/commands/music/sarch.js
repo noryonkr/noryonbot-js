@@ -1,11 +1,9 @@
-const { MessageEmbed } = require("discord.js")
-
 class Command {
     constructor (client) {
         
         this.client = client
-        this.name = 'play'
-        this.aliases = ["재생"]
+        this.name = 'search'
+        this.aliases = ["sc","검색"]
         this.category = 'music'
         this.permissions = ['Everyone']
         this.usage = '없습니다.'
@@ -20,13 +18,13 @@ class Command {
     }
 
     async run ({ message, args, client }) {
-        if (!message.member.voice.channel) return message.channel.send(`${this.client.config.emojis.error} 당신은 음성 채널에 있지 않습니다!`);
+  if (!message.member.voice.channel) return message.channel.send(`${this.client.config.emojis.error} 당신은 음성 채널에 있지 않습니다!`);
 
         if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.channel.send(`${this.client.config.emojis.error} 당신은 같은 음성 채널에 있지 않습니다!`);
 
         if (!args[0]) return message.channel.send(`${this.client.config.emojis.error} 노래 제목을 알려주세요!`);
 
-        this.client.music.play(message, args.join(" "), { firstResult: true });
+        this.client.music.play(message, args.join(" "));
     }
 }
 

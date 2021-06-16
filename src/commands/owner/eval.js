@@ -7,9 +7,9 @@ class Command {
         this.name = 'eval'
         this.aliases = ['실행']
         this.category = 'owner'
-        this.permissions = ['Owner']
+        this.permissions = ['owner']
         this.usage = 's!eval <Text>'
-        this.description = '음악을 재생합니다'
+        this.description = 'node.js를 실행합니다'
         this.requirements = {
             allowDM: false,
             inVoice: false,
@@ -21,14 +21,36 @@ class Command {
     }
 
     async run ({ message, client, args}) {
-        if(message.author.id != this.client.config.owners) return message.reply('개발자가 아니에요. \n> ⚠ Not Developer Permission')
-        if(!args) return message.channel.send('관리자님, Text를 적어주세요!')
-  const Eval = new MessageEmbed()
-  .setTitle("실행 완료")
-  .setDescription('```js\n'+eval(args.join(' '))+'```')
-  .setFooter(message.author.tag,message.author.displayAvatarURL())
-  message.channel.send(Eval)
+    
+        if(!message.author.id == this.client.config.owners) return message.reply('개발자가 아니에요. \n> ⚠ Not Developer Permission')
+
+        const input = args.join(' ')
+        if(input.length < 1) return message.reply('Text를 적어주세요!')
+
+        // Actual Eval
+        try {
+            const result = eval(input)
+
+            const embed = new MessageEmbed()
+                .setTitle("실행 완료")
+                .setDescription(`⌨Input\`\`\`md\n${input}\n\`\`\`\n🖥Output\`\`\`js\n${result}\n\`\`\``)
+                
+                .setColor(this.client.config.color)
+                .setFooter("저작권 소유: 놀욘#0132 comjun04#0001", this.client.user.displayAvatarURL())
+            message.channel.send(embed)
+        } catch (e) {
+            console.error(e)
+            this.client.channels.cache.get('853231576141529108').send('[ERROR] '+e)
+            const embed = new MessageEmbed()
+                .setTitle('에러')
+                .setDescription(`⌨Input\`\`\`md\n${input}\n\`\`\`\n🖥Output\`\`\`js\n${e.message}\n\`\`\``)
+                .setColor('RED')
+                .setFooter("저작권 소유: 놀욘#0132 comjun04#0001", this.client.user.displayAvatarURL())
+            return message.channel.send(embed)
+        }
     }
 }
+
+
 
 module.exports = Command
