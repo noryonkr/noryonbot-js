@@ -6,6 +6,7 @@ const utils = require('./src/utils')
 
 const { Player } = require('discord-player');
 const hook = new WebhookClient("853564813362724894","MAODVMJTYXLbIJNv0LS-zHAO-VcmvLJQTlg9P0lMVLEYzahpo3PKKCZXtL9v7aaJKRzW")
+const hook2 = new WebhookClient("853223309822525450","1VY2PXedKueApLLAtW5V9Nf8ZSu7Q0gvs9RRetH36KUxjbIsX8gMOHXnbeV0kAsnYyIo")
 class BaseClient extends Client {
   constructor (options) {
     super()
@@ -33,7 +34,7 @@ class BaseClient extends Client {
 
   async init () {
       this.logger.debug(`[Init] Initializing...`)
-      new WebhookClient("853223309822525450","1VY2PXedKueApLLAtW5V9Nf8ZSu7Q0gvs9RRetH36KUxjbIsX8gMOHXnbeV0kAsnYyIo").send(`[Init] Initializing...`)
+     hook2.send(`[Init] Initializing...`)
       
       await this.registerEvents()
       await this.loadCommands()
@@ -53,12 +54,12 @@ class BaseClient extends Client {
     const reloadOrLoadPrefix = this.events_loaded ? '[RegisterEvents:Reload]' : '[RegisterEvents:Load]'
     const reloadOrLoadSubfix = this.events_loaded ? 'Reload' : 'Load'
     this.logger.debug(`[DEBUG] ${reloadOrLoadPrefix} ${reloadOrLoadSubfix} Events...`)
-    new WebhookClient("853223309822525450","1VY2PXedKueApLLAtW5V9Nf8ZSu7Q0gvs9RRetH36KUxjbIsX8gMOHXnbeV0kAsnYyIo").send(`${reloadOrLoadPrefix} ${reloadOrLoadSubfix} Events...`)
+    hook2.send(`${reloadOrLoadPrefix} ${reloadOrLoadSubfix} Events...`)
 
     const loadedEvents = await this.globAsync(path.join(process.cwd(), '/src/events/**/*.js'))
 
     this.logger.info(`${reloadOrLoadPrefix} ${reloadOrLoadSubfix}ed Events: ${loadedEvents.length}`)
-    new WebhookClient("853223309822525450","1VY2PXedKueApLLAtW5V9Nf8ZSu7Q0gvs9RRetH36KUxjbIsX8gMOHXnbeV0kAsnYyIo").send(`[INFO] ${reloadOrLoadPrefix} ${reloadOrLoadSubfix}ed Events: ${loadedEvents.length}`)
+    hook2.send(`[INFO] ${reloadOrLoadPrefix} ${reloadOrLoadSubfix}ed Events: ${loadedEvents.length}`)
 
     for (const file of loadedEvents) {
       const Event = new (require(file))(this)
@@ -67,19 +68,19 @@ class BaseClient extends Client {
         if (listener) {
           this.removeListener(Event.name, listener)
           this.logger.warn(`${reloadOrLoadPrefix} Removed Event Listener to ${Event.name}`)
-          new WebhookClient("853223309822525450","1VY2PXedKueApLLAtW5V9Nf8ZSu7Q0gvs9RRetH36KUxjbIsX8gMOHXnbeV0kAsnYyIo").send(`[WARN] ${reloadOrLoadPrefix} Removed Event Listener to ${Event.name}`)
+          hook2.send(`[WARN] ${reloadOrLoadPrefix} Removed Event Listener to ${Event.name}`)
           this.events.delete(Event.name)
         }
       }
       delete require.cache[require.resolve(file)]
       this.logger.debug(`${reloadOrLoadPrefix} Added Event Listener to ${Event.name}`)
-      new WebhookClient("853223309822525450","1VY2PXedKueApLLAtW5V9Nf8ZSu7Q0gvs9RRetH36KUxjbIsX8gMOHXnbeV0kAsnYyIo").send(`[DEBUG] ${reloadOrLoadPrefix} Added Event Listener to ${Event.name}`)
+      hook2.send(`[DEBUG] ${reloadOrLoadPrefix} Added Event Listener to ${Event.name}`)
 
       this.on(Event.name, Event.listener)
       this.events.set(Event.name, Event)
     }
     this.logger.info(`${reloadOrLoadPrefix} Successfully Events Registered and ${reloadOrLoadSubfix}ed!`)
-    await new WebhookClient("853223309822525450","1VY2PXedKueApLLAtW5V9Nf8ZSu7Q0gvs9RRetH36KUxjbIsX8gMOHXnbeV0kAsnYyIo").send(`[INFO] ${reloadOrLoadPrefix} Successfully Events Registered and ${reloadOrLoadSubfix}ed!`)
+    await hook2.send(`[INFO] ${reloadOrLoadPrefix} Successfully Events Registered and ${reloadOrLoadSubfix}ed!`)
     this.events_loaded = true
     return this.events
   }
@@ -94,15 +95,15 @@ class BaseClient extends Client {
       const Command = new (require(file))(this)
       this.logger.debug(`${reloadOrLoadPrefix} ${reloadOrLoadSubfix}ing Command: ${Command.name}`)
       this.logger.debug(`${reloadOrLoadPrefix} Added Aliases (${Command.aliases.length}) to ${Command.name}`)
-new WebhookClient("853223309822525450","1VY2PXedKueApLLAtW5V9Nf8ZSu7Q0gvs9RRetH36KUxjbIsX8gMOHXnbeV0kAsnYyIo").send(`[DEBUG] ${reloadOrLoadPrefix} ${reloadOrLoadSubfix}ing Command: ${Command.name}`)
-new WebhookClient("853223309822525450","1VY2PXedKueApLLAtW5V9Nf8ZSu7Q0gvs9RRetH36KUxjbIsX8gMOHXnbeV0kAsnYyIo").send(`[DEBUG] ${reloadOrLoadPrefix} Added Aliases (${Command.aliases.length}) to ${Command.name}`)
+hook2.send(`[DEBUG] ${reloadOrLoadPrefix} ${reloadOrLoadSubfix}ing Command: ${Command.name}`)
+hook2.send(`[DEBUG] ${reloadOrLoadPrefix} Added Aliases (${Command.aliases.length}) to ${Command.name}`)
 
       for (const aliases of Command.aliases) this.aliases.set(aliases, Command.name)
       this.commands.set(Command.name, Command)
       delete require.cache[require.resolve(file)]
     }
     this.logger.info(`${reloadOrLoadPrefix} Successfully Command ${reloadOrLoadSubfix}ed!`)
-    new WebhookClient("853223309822525450","1VY2PXedKueApLLAtW5V9Nf8ZSu7Q0gvs9RRetH36KUxjbIsX8gMOHXnbeV0kAsnYyIo").send(`[INFO] ${reloadOrLoadPrefix} Successfully Command ${reloadOrLoadSubfix}ed!`)
+    hook2.send(`[INFO] ${reloadOrLoadPrefix} Successfully Command ${reloadOrLoadSubfix}ed!`)
     this.commands_loaded = true
     return this.commands
     
