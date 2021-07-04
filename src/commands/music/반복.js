@@ -18,11 +18,11 @@ class Command {
     }
 
     async run ({ message, args, client }) {
-        if (!message.member.voice.channel) return message.channel.send(`${this.client.emojis.error} 당신은 음성 채널에 있지 않습니다!`);
+        if (!message.member.voice.channel) return message.channel.send(`${this.client.config.emojis.error} 당신은 음성 채널에 있지 않습니다!`);
 
-        if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.channel.send(`${this.client.emojis.error} 당신은 같은 음성 채널에 있지 않습니다!`);
+        if (message.guild.me.voice.channel && message.member.voice.channel.id !== message.guild.me.voice.channel.id) return message.channel.send(`${this.client.config.emojis.error} 당신은 같은 음성 채널에 있지 않습니다!`);
 
-        if (!client.player.getQueue(message)) return message.channel.send(`⚠ 현재 재생중인 음악이 없습니다!`);
+        if (!this.client.music.getQueue(message)) return message.channel.send(`⚠ 현재 재생중인 음악이 없습니다!`);
 
         if (args.join(" ").toLowerCase() === 'queue') {
             if (this.client.music.getQueue(message).loopMode) {

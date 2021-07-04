@@ -4,8 +4,8 @@ const { MessageEmbed } = require("discord.js")
 class Command {
     constructor (client) {
         this.client = client
-        this.name = '모든공지'
-        this.aliases = ['모지']
+        this.name = '공지'
+        this.aliases = ['notice']
         this.category = 'owner'
         this.permissions = ['admin']
         this.usage = 's!ban <Text>'
@@ -56,7 +56,7 @@ th.edit(new MessageEmbed().setTitle('공지사항이 전송되었습니다.').se
                             })
                             if (!Ch.permissionsFor(g.me).has(['VIEW_CHANNEL', 'SEND_MESSAGES', 'EMBED_LINKS'])) return message.author.send(`${g.name}: 발신 실패 (메시지 발신 실패)\n`)
                             
-                            Ch.send(new MessageEmbed().setTitle(`📌하늘 공지`).setThumbnail(this.client.user.displayAvatarURL()).setDescription(args.join(" ")+"\n---------------\n📌[Team Alpha](https://alpha.xyz/discord)\n📌[Team Leo™](https://discord.gg/n2KUDk7)").setColor("BLUE").setFooter(message.author.tag, message.author.displayAvatarURL()).setTimestamp())
+                            Ch.send(new MessageEmbed().setTitle(`📌하늘 공지`).setThumbnail(this.client.user.displayAvatarURL()).setDescription(args.join(" ")+"\n---------------\n📌[Team Alpha](https://alphakr.xyz)\n📌[Team Leo™](https://discord.gg/n2KUDk7)\n📌[하늘봇 커뮤니티](https://discord.gg/fjTaAWKK9D)").setColor("BLUE").setFooter(message.author.tag, message.author.displayAvatarURL()).setTimestamp())
                         } catch (e) {
                             message.author.send(`에러가 발생하였습니다.\n${e.message || e}`)
                         }

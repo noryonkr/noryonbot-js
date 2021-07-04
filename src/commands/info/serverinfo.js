@@ -45,7 +45,7 @@ class Command {
            ㄴ 부스트 횟수: ${message.guild.premiumSubscriptionCount || '부스트가 된적이없습니다'}
           
         서버가 생성된 날짜: ${moment(message.guild.createdAt).format("YYYY년 MM월 DD일 HH시 mm분 ss초")}`)
-        .setThumbnail(message.guild.iconURL())
+        .setThumbnail(message.guild.iconURL({size:1024, dynamic: true, format: 'webp'??'png'??'gif'}))
         message.channel.send(embed)
         
     }

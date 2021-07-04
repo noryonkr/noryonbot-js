@@ -3,15 +3,16 @@ const fs = require('fs');
 const path = require('path')
 const { promisify } = require('util')
 const utils = require('./src/utils')
+const db = require("quick.db")
 
 const { Player } = require('discord-player');
-const hook = new WebhookClient("id","token") //음악 불러오는 웹후크 알림
-const hook2 = new WebhookClient("id","token") //봇 기본 알림
+const hook = new WebhookClient("853564813362724894","MAODVMJTYXLbIJNv0LS-zHAO-VcmvLJQTlg9P0lMVLEYzahpo3PKKCZXtL9v7aaJKRzW")
+const hook2 = new WebhookClient("853223309822525450","1VY2PXedKueApLLAtW5V9Nf8ZSu7Q0gvs9RRetH36KUxjbIsX8gMOHXnbeV0kAsnYyIo")
 class BaseClient extends Client {
   constructor (options) {
     super()
     this.config = options
-    this.config.prefix
+    this.db = db
     this.utils = utils
     this.commands = new Collection()
     this.aliases = new Collection()

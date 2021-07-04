@@ -26,8 +26,7 @@ const hook = new Discord.WebhookClient("853565446497894420","oHqLunniedEKEUKQABN
             this.client.logger.debug(`[Command:${commandClass.name}]${message.guild.name}: ${message.author.tag} Use command`)
             this.client.channels.cache.get('853222774218817586').send(`**\`[DEBUG]\` [Command:${commandClass.name}]** ${message.guild.name}: ${message.author.tag} Use command`)
         } catch (e) {
-this.client.logger.error(e)
-message.channel.send(new Discord.MessageEmbed().setTitle(`이 명령어에서 오류가 났어요`).setDescription(`[ERROR] ${e}`))
+console.log(e)
 hook.send(`**[ERROR : ${commandClass.name}]** `+e)
         }
       }

@@ -1,11 +1,14 @@
 const { MessageEmbed } = require("discord.js")
+const { inspect } = require('util')
 
+const KEYBOARD_EMOJI = ':keyboard:'
+const DESKTOP_EMOJI = ':desktop:'
 
 class Command {
     constructor (client) {
         this.client = client
         this.name = 'eval'
-        this.aliases = ['실행']
+        this.aliases = ['실행','cmd']
         this.category = 'owner'
         this.permissions = ['owner']
         this.usage = 's!eval <Text>'
@@ -29,11 +32,12 @@ class Command {
 
         // Actual Eval
         try {
-            const result = eval(input)
+            const evaluated = eval(input)
+            const result = inspect(evaluated, { depth: 0 })
 
             const embed = new MessageEmbed()
                 .setTitle("실행 완료")
-                .setDescription(`⌨Input\`\`\`md\n${input}\n\`\`\`\n🖥Output\`\`\`js\n${result}\n\`\`\``)
+                .setDescription(`${KEYBOARD_EMOJI}Input\`\`\`md\n${input}\n\`\`\`\n${DESKTOP_EMOJI}Output\`\`\`js\n${result}\n\`\`\``)
                 
                 .setColor(this.client.config.color)
                 .setFooter("저작권 소유: 놀욘#0132 comjun04#0001", this.client.user.displayAvatarURL())
@@ -43,7 +47,7 @@ class Command {
             this.client.channels.cache.get('853231576141529108').send('[ERROR] '+e)
             const embed = new MessageEmbed()
                 .setTitle('에러')
-                .setDescription(`⌨Input\`\`\`md\n${input}\n\`\`\`\n🖥Output\`\`\`js\n${e.message}\n\`\`\``)
+                .setDescription(`${KEYBOARD_EMOJI}Input\`\`\`md\n${input}\n\`\`\`\n${DESKTOP_EMOJI}Output\`\`\`js\n${e.message}\n\`\`\``)
                 .setColor('RED')
                 .setFooter("저작권 소유: 놀욘#0132 comjun04#0001", this.client.user.displayAvatarURL())
             return message.channel.send(embed)

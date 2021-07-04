@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+
 class Command {
     constructor (client) {
         this.client = client
@@ -17,56 +18,120 @@ class Command {
         }
     }
 
-    async run ({ message, args, client}) {
+    async run ({ message, args}) {
+      const p0 = new Discord.MessageEmbed()
+      .setColor(this.client.config.color)
+      .setDescription(`안녕하세요 ${message.author}님\n[이 링크를 눌러 초대를 해보세요!](http://skybluebot.kro.kr)\n\n이모지에 반응하여 다음페이지로 이동합니다`)
+      .setTitle("[ 도움말 ㅣ 설명 (0/5) ]")
+      const p1 = new Discord.MessageEmbed()
+      .setTitle("[ 도움말 - Owner ‹개발도움/주인 전용› (1/5) ]")
+      .setColor(this.client.config.color)
+      .setDescription(`안녕하세요 ${message.author}님\n[이 링크를 눌러 초대를 해보세요!](http://skybluebot.kro.kr)\n\n이모지에 반응하여 다음페이지로 이동합니다\n\n \`s!cmd\` (eval, 실행)\n\`s!공식공지\` (식공)\n\`s!notice\` (공지)\n\`s!reload (리로드, ㄹㄹㄷ)\``)
+      
+      const p2 = new Discord.MessageEmbed()
+      .setTitle("[ 도움말 - Genaral ‹시스템› (2/5) ]")
+      .setColor(this.client.config.color)
+      .setDescription(`안녕하세요 ${message.author}님\n[이 링크를 눌러 초대를 해보세요!](http://skybluebot.kro.kr)\n\n이모지에 반응하여 다음페이지로 이동합니다\n\n \`s!help\` (도움, 도움말)\n\`s!ping\` (핑)\n\`s!uptime\` (업타임)\n\`s!invite\` (초대)\n\`s!support-server\` (서포트서버)`)
+      
+      const p3 = new Discord.MessageEmbed()
+      .setTitle("[ 도움말 - Info ‹정보› (3/5) ]")
+      .setColor(this.client.config.color)
+      .setDescription(`안녕하세요 ${message.author}님\n[이 링크를 눌러 초대를 해보세요!](http://skybluebot.kro.kr)\n\n이모지에 반응하여 다음페이지로 이동합니다\n\n\`s!serverinfo\` (serinfo, 서버정보)\n\`s!profile\` (pr, 프로필)`)
+      
 
 
-console.log(message)
-        const page1 = new Discord.MessageEmbed()
-        .setTitle('[ 하늘봇 도움말 ]')
-        .addField(`🔐 개발자`,[
-          `s!eval - \`nodejs를 실행합니다\``,
-          `s!모든공지 (모지) - \`모든서버에 공지를 보냅니다\``,
-          `s!공식공지 (식공) - \`공식 서버에 공지를 보냅니다\``
-        ])
+
+    let pages = [
+      p0,p1,p2,p3
+  ];
+  
+  let current = 0;
+
+  let m = await message.channel.send('Loading pages...');
+  
+  function createEmbed (page) {
+      const embed = pages[page]
+      
+      return embed;
+  };
+  
+
+  function reactionsNeeded (page) {
+      return [
+          pages[page - 1],
+          pages[page + 1]
+      ];
+  };
+  
+  // Next, we'll make another function which will be used to show pages.
+  async function showPage (page) {
+      let output = createEmbed(page);
+      
+
+      await m.edit(null, output);
+      
+   
+      //await m.reactions.remove(m.client.user.id);
+      
+
+      let needed = reactionsNeeded(page);
+      let left, right;
+      
+
+
+
+      if (needed[0]) {
         
-        .addField(`🟦 기본`,[
-            `s!help(도움, 도움말) - \`이 명령어입니다\``,
-            `s!ping(핑) - \`봇의 핑력을 확인합니다\``,
-            `s!uptime(업타임) - \`봇이 실행된 시간을 알려줘요\``,
-            `s!invite(초대) - \`저를 초대해주세요\``,
-            `s!서포트서버(support-server) - \`서포트 서버들 목록\``
-        ])
+          await m.react('⬅️');
+          await m.react('➡️');
+          // We'll quickly create a reaction collector filter so we only collect the right events...
+          let filter = (r, u) => r.emoji.name == '⬅️' && u.id == message.author.id;
+          
+          // ...and then set the variable we made earlier. We'll make sure our collector times out after 60,000ms (60 seconds).
+          left = m.createReactionCollector(filter, { time: 60000 });
+          
+          // We'll now handle the add reaction event.
+          left.on('collect', r => {
+              // We'll stop listening for any more reactions here...
+              if (right) right.stop();
+              
+              left.stop();
+              
+              // ...and will then show the new page and update the current page.
+              showPage(current - 1);
+              current = current - 1;
+            
+          });
 
-        .addField(`🛠 관리자`,[
-          `s!clear(청소, 지우기) - \`메시지를 제거합니다\``
-        ])
-        
-        .addField('🔎 정보',[
-          `s!서버정보(serverinfo, serinfo) - \`서버정보를 표시합니다\``,
-          `s!프로필(pr) - \`프로필을 봅니다\``
-        ])
-        
-        .addField('🎶 음악', [
-          `s!재생(play,p) - \`음악을 재생\``,
-          `s!검색(search,sc) - \`음악을 검색하고 재생\``,
-          `s!스킵(skip,s) - \`음악 스킵\``,
-          `s!정지(stop, st) - \`음악을 정지\``,
-          `s!볼륨(volume, vol, v) - \`볼륨 조절\``,
-          `s!np(now,nowplaying) - \`재생중인 곡\``,
-          `s!필터(filter,ft) - \`음악에 효과를 넣습니다\``,
-          `s!필터보기(filters,view-filter,필보) - \`필터가 활성화 또는 비활성화 목록을 봅니다\``,
-          `s!반복(repeat,loop) - \`음악 반복모드를 변경\``,
-          `s!queue(재생목록,q) - \`재생목록을 봅니다\``,
-          `s!썪기(shuffle, sf) - \`재생목록에있는 노래들을 썪어요\``,
-          `s!재생목록초기화(재초, queue-clear) - \`재생목록 초기화\``,
-          `s!일시정지(pause,pu) - \`음악을 일시정지합니다.\``,
-          `s!재개(resume, rs) - \`일시중지된 음악을 재개합니다\``
-        ])
-        .setThumbnail(this.client.user.displayAvatarURL())
-        .setColor('#63aaf7')
-        .setTimestamp()
-        message.channel.send(page1)
 
+      };
+      
+      // We'll now do that again for the other reaction. Only minor changes are made.
+      if (needed[1]) {
+        await m.react('⬅️');
+          await m.react('➡️');
+          
+          let filter = (r, u) => r.emoji.name == '➡️' && u.id == message.author.id;
+          right = m.createReactionCollector(filter, { time: 60000 });
+          
+          right.on('collect', r => {
+              if (left) left.stop();
+              right.stop();
+          
+              if(!right) message.channel.send("❌ 이런, 페이지가 넘어가지않아요")
+              showPage(current + 1);
+              current = current + 1;
+
+          });
+
+
+      };
+  };
+
+  
+  
+  // Now we've done that, we will now create our page system.
+  showPage(current);
     }
 }
 
